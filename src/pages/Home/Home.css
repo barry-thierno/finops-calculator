@@ -82,3 +82,7 @@
     padding: 0;
     color: #212529;
   }
+  /* css for finops */
+  .input-line {
+    display:flex;
+  }

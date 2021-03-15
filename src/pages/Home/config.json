@@ -1,0 +1,17 @@
+{
+    "instances": 
+	[
+		 {
+			"title": "I1",
+			"price": 144
+		 },
+		 {
+			"title": "I2",
+			"price": 288
+		 },
+		 {
+			"title": "I3",
+			"price": 576
+		 }
+	 ]
+}

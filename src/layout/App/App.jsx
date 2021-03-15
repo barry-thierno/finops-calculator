@@ -9,7 +9,7 @@ const App = () => (
   <>
     <div className="app">
       <HeaderLayout />
-      <Title title="Simulator" />
+      <Title title="Simulateur Azure FinOps" />
       <div className="app-content">
         <div className="container">
           <Home />
