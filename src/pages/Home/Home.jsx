@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, Button } from '@axa-fr/react-toolkit-all';
+import { Text } from '@axa-fr/react-toolkit-all';
 import config from './config.json';
 
 
@@ -18,9 +18,6 @@ const Home = () => {
   const [i5, setI5] = useState(0);
   const [i6, setI6] = useState(0);
 
-  // const computePriceHandler = () => {
-  //   setResult(i1 * i1Price.price + i2 * i2Price.price + i3 * i3Price.price) 
-  // };
   const liveCompute = (v1, v2, v3) => {
     setResult(v1 * i1Price.price + v2 * i2Price.price + v3 * i3Price.price) 
   }
@@ -32,16 +29,16 @@ const Home = () => {
   const liveComputeProjection = (v4, v5, v6) => {
     setResultProjection(v4 * i1Price.price + v5 * i2Price.price + v6 * i3Price.price) 
   }
-
+  const winLabel = () => 
+    result - resultProjection > 0 ? `Gain ${result - resultProjection} €` : `Perte ${resultProjection -result} €`
+  
   return (
     <>
       <div className="">
-      <dl className="input-line">
-      <dt></dt>
-            <dd >
-              Service plan actuel
-            </dd>
-        </dl>
+        <div className="title">
+          <div>Service plan actuel</div>
+          <div>Projection</div>
+        </div>
         <dl className="input-line">
             <dt>I1</dt>
             <dd >
@@ -98,7 +95,7 @@ const Home = () => {
                   liveComputeProjection(i4, current, i6)
                 }}
               />
-              {i1Price.price} euros / mois
+              {i2Price.price} euros / mois
             </dd>
           </dl>
           <dl className="input-line">
@@ -129,16 +126,20 @@ const Home = () => {
                      liveComputeProjection(i4, i5, current)
                    }}
                  />
-                 {i1Price.price} euros / mois
+                 {i3Price.price} euros / mois
                </dd>
           </dl>
       </div>
       {/* <div>
       <Button onClick={computePriceHandler}>Valider</Button>
       </div> */}
-
-      <div>{result} euros par mois</div>
-      <div>{resultProjection} euros par mois</div>
+      <div className="title">
+          <div>{result} euros par mois</div>
+          <div>{resultProjection} euros par mois</div>
+        </div>
+      {/* <div></div>
+      <div></div> */}
+      <div>{winLabel()}</div>
 
     </>
   );

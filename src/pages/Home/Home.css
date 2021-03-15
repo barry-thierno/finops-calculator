@@ -86,3 +86,8 @@
   .input-line {
     display:flex;
   }
+  .title {
+    display: flex;
+    justify-content: space-between;
+    width: 400Px;
+  }
