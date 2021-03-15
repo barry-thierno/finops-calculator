@@ -3,15 +3,18 @@
 	[
 		 {
 			"title": "I1",
-			"price": 144
+			"price": 144,
+			"description": "210 ACU et 3.5 Go de mémoire"
 		 },
 		 {
 			"title": "I2",
-			"price": 288
+			"price": 288,
+			"description": "420 ACU et 7 Go de mémoire"
 		 },
 		 {
 			"title": "I3",
-			"price": 576
+			"price": 576,
+			"description": "840 ACU et 14 Go de mémoire"
 		 }
 	 ]
 }

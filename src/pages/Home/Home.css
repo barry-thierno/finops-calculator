@@ -83,6 +83,10 @@
     color: #212529;
   }
   /* css for finops */
+  .finops-container {
+    display: flex;
+    justify-content: center;
+  }
   .input-line {
     display:flex;
   }
@@ -90,4 +94,6 @@
     display: flex;
     justify-content: space-between;
     width: 400Px;
+    font-size: 14px;
+    font-weight: bold;
   }
