@@ -9,7 +9,7 @@ const App = () => (
   <>
     <div className="app">
       <HeaderLayout />
-      <Title title="Home Page" />
+      <Title title="Simulator" />
       <div className="app-content">
         <div className="container">
           <Home />
