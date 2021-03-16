@@ -97,3 +97,13 @@
     font-size: 14px;
     font-weight: bold;
   }
+
+  .win {
+    color: green;
+    font-weight: bolder;
+  }
+
+  .lost {
+    color: red;
+    font-weight: bolder;
+  }

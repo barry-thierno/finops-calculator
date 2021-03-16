@@ -20,6 +20,8 @@ const Home = () => {
 
   const [resulAutoScale, setResulAutoScale] = useState(0)
 
+  const [resulAutoScaleSemaine, setResulAutoScaleSemaine] = useState(0)
+
   const liveCompute = (v1, v2, v3) => {
     setResult(v1 * i1Price.price + v2 * i2Price.price + v3 * i3Price.price) 
   }
@@ -41,7 +43,12 @@ const Home = () => {
     setResulAutoScale(nbInstance * instance.price * (6/7) + instance.price* (1/7))
   }
   
+  const computeAutoScaleSemaine = (instance, nbInstance, tempsAutoScale) => {
+    setResulAutoScaleSemaine(nbInstance * instance.price * ((1- tempsAutoScale)/168) + instance.price* (tempsAutoScale/168))
+  }
+ const winClassName = result - resultProjection > 0 ? 'win' : 'lost'
 
+ const formatCurrency = (money) => new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(money)
   return (
     <div>
     <div className="finops-container">
@@ -78,6 +85,7 @@ const Home = () => {
                   setI3(0)
                   liveCompute(current, i2, i3)
                   autoScale(i1Price, current)
+                  computeAutoScaleSemaine(i1Price, current, 50)
                 }}
               />
           </Table.Td>
@@ -113,6 +121,7 @@ const Home = () => {
                   setI3(0)
                   liveCompute(i1, current, i3)
                   autoScale(i2Price, current)
+                  computeAutoScaleSemaine(i2Price, current, 50)
                 }}
               />
           </Table.Td>
@@ -148,6 +157,7 @@ const Home = () => {
                   setI1(0)
                   liveCompute(i1, i2, current)
                   autoScale(i3Price, current)
+                  computeAutoScaleSemaine(i3Price, current, 50)
                 }}
               />
           </Table.Td>
@@ -172,26 +182,114 @@ const Home = () => {
             <div className="af-table-body-content">Prix</div>
           </Table.Td>
           <Table.Td>
-          <span className="af-table-body-content">{`${result} euros par mois`} </span>
+          <span className="af-table-body-content">{`${formatCurrency(result)}/mois`} </span>
           </Table.Td>
           <Table.Td>
-          <div className="af-table-body-content">{`${resultProjection} euros par mois`}</div>
-          <div>{winLabel()} </div>
+          <div className="af-table-body-content">{`${formatCurrency(resultProjection)}/mois`}</div>
+          <div className={winClassName}>{winLabel()} </div>
           </Table.Td>
         </Table.Tr>
       </Table.Body>
       
     </Table>
   </div>
-
+ 
   <div>
-    <h1 className="af-title--content">Auto scale</h1>
+    <h1 className="af-title--content">Auto scale weekend (samedi)</h1>
         <div className="tax-result">
-    
-          <Restitution label="Gain auto scale" value={`${Math.round((result - resulAutoScale)*100)/100}`} />
-          <Restitution label="Auto scale" value={Math.round(resulAutoScale*100)/100} />
+          <Restitution classModifier="win" label="Gain auto scale" value={`${formatCurrency(Math.round((result - resulAutoScale)*100)/100)}/mois`} />
+          <Restitution label="Auto scale" value={`${ formatCurrency(Math.round(resulAutoScale*100)/100)}/mois`} />
       </div>
    </div>
+
+  <div>
+    <h1 className="af-title--content">Auto scale semaine</h1>
+      <div className="tax-result">
+        <Restitution classModifier="win" label="Gain auto scale" value={`${formatCurrency(Math.round((result - resulAutoScaleSemaine)*100)/100)}/mois`} />
+        <Restitution label="Auto scale" value={`${ formatCurrency(Math.round(resulAutoScaleSemaine*100)/100)}/mois`} />
+      </div>
+  </div>
+  <h1 className="af-title--content">xxxxxxxxxxxxxxxxxxx</h1>
+  <div className="finops-container">
+    <Table
+        className=''>
+        <Table.Header>
+          <Table.Tr>
+            <Table.Th>
+              <span className="af-table-th-content">Autoscale</span>
+            </Table.Th>
+            <Table.Th>
+              <span className="af-table-th-content">West</span>
+            </Table.Th>
+            <Table.Th>
+              <span className="af-table-th-content">North</span>
+            </Table.Th>
+            <Table.Th>
+              <span className="af-table-th-content">Total</span>
+            </Table.Th>
+          </Table.Tr>
+        </Table.Header>
+        <Table.Body>
+          <Table.Tr>
+            <Table.Td>
+              <span className="af-table-body-content">Internet</span>
+            </Table.Td>
+            <Table.Td>
+              
+            </Table.Td>
+            <Table.Td>
+              <span className="af-table-body-content">Entreprise</span>
+            </Table.Td>
+            <Table.Td>
+              <span className="af-table-body-content">Entreprise</span>
+            </Table.Td>
+          </Table.Tr>
+          <Table.Tr>
+            <Table.Td>
+              <span className="af-table-body-content">Internet Entreprise</span>
+            </Table.Td>
+            <Table.Td>
+              <span className="af-table-body-content">Some text</span>
+            </Table.Td>
+            <Table.Td>
+              <span className="af-table-body-content">Some text</span>
+            </Table.Td>
+            <Table.Td>
+              <span className="af-table-body-content">Some text</span>
+            </Table.Td>
+          </Table.Tr>
+          <Table.Tr>
+            <Table.Td>
+              <span className="af-table-body-content">Distributeur</span>
+            </Table.Td>
+            <Table.Td>
+              <span className="af-table-body-content">Some text</span>
+            </Table.Td>
+            <Table.Td>
+              <span className="af-table-body-content">Some text</span>
+            </Table.Td>
+            <Table.Td>
+              <span className="af-table-body-content">Some text</span>
+            </Table.Td>
+          </Table.Tr>
+          <Table.Tr>
+            <Table.Td>
+              <span className="af-table-body-content">Administratif</span>
+            </Table.Td>
+            <Table.Td>
+              <span className="af-table-body-content">Some text</span>
+            </Table.Td>
+            <Table.Td>
+              <span className="af-table-body-content">Some text</span>
+            </Table.Td>
+            <Table.Td>
+              <span className="af-table-body-content">Some text</span>
+            </Table.Td>
+          </Table.Tr>
+        </Table.Body>
+      </Table>
+    </div>
+  
    
   </div>
   );
