@@ -13,6 +13,11 @@
     "react-scripts": "3.4.3",
     "sass": "^1.26.11"
   },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

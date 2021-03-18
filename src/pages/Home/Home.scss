@@ -1,0 +1,71 @@
+/* css for finops */
+.finops-container {
+  display: flex;
+  justify-content: center;
+}
+.input-line {
+  display: flex;
+}
+.title {
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.recap-container {
+  width: 80%;
+  margin: auto;
+}
+.af-restitution__listdef {
+  &--win {
+    dd {
+      color: #fff;
+      border-radius: 25px;
+      background: green;
+      flex-basis: 23%;
+      text-align: center;
+    }
+  }
+}
+.af-restitution__listdef {
+  &--lost {
+    dd {
+      color: #fff;
+      border-radius: 25px;
+      background: red;
+      flex-basis: 23%;
+      text-align: center;
+    }
+  }
+}
+
+.af-restitution__content-left {
+  justify-content: center;
+}
+.region-table-container {
+  display: flex;
+  justify-content: center;
+}
+.af-table {
+  &__cell {
+    &--desc {
+      min-width: 200px;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  &__cell:last-child {
+    // color: green;
+    font-size: 1rem;
+    font-weight: bolder;
+  }
+}
+// .af-table__th {
+//   min-width: 200px;
+// }
+
+// .af-table__cell {
+//   display: flex;
+//   justify-content: space-between;
+// }
