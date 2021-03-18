@@ -12,13 +12,14 @@ import { formatCurrency } from 'shared/helpers';
 
 const AutoScaleRecap = ({ currentPrice, projectionPrice, autoScaleRegion }) => {
   const estimationResult = currentPrice - projectionPrice;
-  const resultLabel = () => {
+
+  const resultLabel = multiplucator => {
     if (projectionPrice === 0 || estimationResult === 0) {
       return '';
     }
     return estimationResult > 0
-      ? `Gain ${estimationResult} €`
-      : `Perte ${Math.abs(estimationResult)} €`;
+      ? `Gain ${formatCurrency(multiplucator * estimationResult)}`
+      : `Perte ${formatCurrency(Math.abs(multiplucator * estimationResult))}`;
   };
 
   const resultClassName = currentPrice - projectionPrice > 0 ? 'win' : 'lost';
@@ -28,25 +29,41 @@ const AutoScaleRecap = ({ currentPrice, projectionPrice, autoScaleRegion }) => {
       <HeaderRestitution title="Tarifs" />
       <SectionRestitution>
         <SectionRestitutionRow title="Prix(service plan actuel vs projection)">
-          <SectionRestitutionColumn>
+          <div className="restitution_bloc">
             <Restitution
-              label="Prix pour une region"
+              label="Prix pour 1 region"
               value={`${formatCurrency(currentPrice)}/mois`}
             />
-          </SectionRestitutionColumn>
-          <SectionRestitutionColumn>
             <Restitution
-              label="Prix Projection"
+              label="Prix projection pour 1 region"
               value={`${formatCurrency(projectionPrice)}/mois`}
             />
             {estimationResult !== 0 && projectionPrice !== 0 && (
               <Restitution
                 classModifier={resultClassName}
-                label="Resultat"
-                value={resultLabel()}
+                label="Resultat pour 1 region"
+                value={resultLabel(1)}
               />
             )}
-          </SectionRestitutionColumn>
+          </div>
+
+          <div className="restitution_bloc">
+            <Restitution
+              label="Prix pour 2 regions"
+              value={`${formatCurrency(2 * currentPrice)}/mois`}
+            />
+            <Restitution
+              label="Prix projection pour 2 regions"
+              value={`${formatCurrency(2 * projectionPrice)}/mois`}
+            />
+            {estimationResult !== 0 && projectionPrice !== 0 && (
+              <Restitution
+                classModifier={resultClassName}
+                label="Resultat pour 2 regions"
+                value={resultLabel(2)}
+              />
+            )}
+          </div>
         </SectionRestitutionRow>
         <SectionRestitutionRow title="Resultats">
           <SectionRestitutionColumn classModifier="region">

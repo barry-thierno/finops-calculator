@@ -56,7 +56,10 @@ const Home = () => {
 
   useEffect(() => {
     liveCompute(i1, i2, i3);
-  });
+    if (i1 + i2 + i3 === 0) {
+      setAutoScaleRegion(defaultRegionsValues);
+    }
+  }, [i1, i2, i3]);
 
   const liveComputeProjection = (v4, v5, v6) => {
     setResultProjection(
@@ -263,23 +266,6 @@ const Home = () => {
                 />
               </Table.Td>
             </Table.Tr>
-            {/* footer */}
-            {/* <Table.Tr>
-              <Table.Td>
-                <div className="af-table-body-content">Prix</div>
-              </Table.Td>
-              <Table.Td>
-                <span className="af-table-body-content">
-                  {`${formatCurrency(result)}/mois`}{' '}
-                </span>
-              </Table.Td>
-              <Table.Td>
-                <div className="af-table-body-content">{`${formatCurrency(
-                  resultProjection
-                )}/mois`}</div>
-                <div className={winClassName}>{winLabel()} </div>
-              </Table.Td>
-            </Table.Tr> */}
           </Table.Body>
         </Table>
       </div>
