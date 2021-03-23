@@ -11,16 +11,18 @@ const RegionAutoScaleTable = ({ autoScaleRegion }) => {
             <span className="af-table-th-content">Autoscale</span>
           </Table.Th>
           <Table.Th>
-            <span className="af-table-th-content">West</span>
+            <span className="af-table-th-content">Région West</span>
           </Table.Th>
           <Table.Th>
-            <span className="af-table-th-content">North</span>
+            <span className="af-table-th-content">Région North</span>
           </Table.Th>
           <Table.Th>
             <span className="af-table-th-content">Total</span>
           </Table.Th>
           <Table.Th>
-            <span className="af-table-th-content">Gain</span>
+            <span className="af-table-th-content">
+              Gain sur les deux régions
+            </span>
           </Table.Th>
         </Table.Tr>
       </Table.Header>
@@ -29,7 +31,12 @@ const RegionAutoScaleTable = ({ autoScaleRegion }) => {
           <Table.Tr>
             <Table.Td classModifier="desc">
               <span> {region.id}</span>
-              <Help>{region.description}</Help>
+              <Help>
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: region.description,
+                  }}></span>
+              </Help>
             </Table.Td>
             {region.regionsValues.map(value => (
               <Table.Td>

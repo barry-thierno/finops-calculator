@@ -2,6 +2,7 @@
 .finops-container {
   display: flex;
   justify-content: center;
+  margin-bottom: 2rem;
 }
 .input-line {
   display: flex;
@@ -14,39 +15,19 @@
   font-weight: bold;
 }
 .recap-container {
-  // width: 80%;
   margin: auto;
 }
-.af-restitution__listdef {
-  &--win {
-    dd {
-      color: #fff;
-      border-radius: 25px;
-      background: green;
-      flex-basis: 26%;
-      text-align: center;
-    }
-  }
-}
-.af-restitution__listdef {
-  &--lost {
-    dd {
-      color: #fff;
-      border-radius: 25px;
-      background: red;
-      flex-basis: 26%;
-      text-align: center;
-    }
-  }
-}
+
 
 .af-restitution__content-left {
   justify-content: center;
 }
+
 .region-table-container {
   display: flex;
   justify-content: center;
 }
+
 .af-table {
   &__cell {
     &--desc {
@@ -56,7 +37,6 @@
     }
   }
   &__cell:last-child {
-    // color: green;
     font-size: 1rem;
     font-weight: bolder;
   }
@@ -64,8 +44,43 @@
 .restitution_bloc {
   display: flex;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
+  justify-content: space-between;
+  padding: 0 10rem;
+  dl {
+    display: flex;
+    flex-direction: column;
+    dt {
+      margin-right: 1rem;
+      font-weight: 600;
+      color: #7a7b7b;
+    }
+    dd {
+      color: #4a4adc;
+      font-weight: 500;
+    }
+  }
+
 }
-.af-title--content {
-  margin: 1rem 0 1.5rem 0;
+.af-alert__title-text {
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.win {
+
+    color: #fff !important;;
+    border-radius: 25px;
+    background: green;
+    flex-basis: 26%;
+    text-align: center;
+  
+}
+
+.lost {
+    color: #fff !important;
+    border-radius: 25px;
+    background: #ff0000a6;
+    flex-basis: 26%;
+    text-align: center;
 }
