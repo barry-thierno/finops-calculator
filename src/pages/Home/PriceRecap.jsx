@@ -1,5 +1,5 @@
 import React from 'react';
-import { SectionRestitutionRow, Restitution } from '@axa-fr/react-toolkit-all';
+import { SectionRestitutionRow } from '@axa-fr/react-toolkit-all';
 
 import { formatCurrency } from 'shared/helpers';
 
@@ -27,14 +27,15 @@ const PriceRecap = ({ currentPrice, projectionPrice }) => {
           <dt>Prix projection pour 1 region</dt>
           <dd>{`${formatCurrency(projectionPrice)}/mois`}</dd>
         </dl>
-      
-          <dl>
-           {estimationResult !== 0 && projectionPrice !== 0 && (
-             <>
-            <dt>Resultat pour 1 region</dt>
-            <dd className={resultClassName}>{resultLabel(1)}</dd>
-             </> )}
-          </dl>
+
+        <dl>
+          {estimationResult !== 0 && projectionPrice !== 0 && (
+            <>
+              <dt>Resultat pour 1 region</dt>
+              <dd className={resultClassName}>{resultLabel(1)}</dd>
+            </>
+          )}
+        </dl>
       </div>
 
       <div className="restitution_bloc">
@@ -46,16 +47,14 @@ const PriceRecap = ({ currentPrice, projectionPrice }) => {
           <dt>Prix projection pour 2 regions(North et West)</dt>
           <dd>{`${formatCurrency(2 * projectionPrice)}/mois`}</dd>
         </dl>
-          <dl>
-        {estimationResult !== 0 && projectionPrice !== 0 && (
-          <>
-            <dt>Resultat pour 2 regions</dt>
-            <dd className={resultClassName}>{resultLabel(2)}</dd>
-            
-          </>
+        <dl>
+          {estimationResult !== 0 && projectionPrice !== 0 && (
+            <>
+              <dt>Resultat pour 2 regions</dt>
+              <dd className={resultClassName}>{resultLabel(2)}</dd>
+            </>
           )}
-          </dl>
-      
+        </dl>
       </div>
     </SectionRestitutionRow>
   );

@@ -64,11 +64,11 @@ const Home = () => {
     }
   }, [i1, i2, i3]);
 
-  const liveComputeProjection = (v4, v5, v6) => {
+  useEffect(() => {
     setProjectionPrice(
-      v4 * i1Instance.price + v5 * i2Instance.price + v6 * i3Instance.price
+      i4 * i1Instance.price + i5 * i2Instance.price + i6 * i3Instance.price
     );
-  };
+  }, [i4, i5, i6]);
 
   const dataModel = [
     {
@@ -97,28 +97,28 @@ const Home = () => {
     },
   ];
 
-  const computeAutoScaleRegions = (instance, nbInstance) => {
+  const computeAutoScaleRegions = (instance, inputNbInstance) => {
     const regionCost = dataModel.map(region => {
       const [west, north] = region.regionsValues;
 
       const westCost =
-        nbInstance * instance.price * ((168 - west) / 168) +
+        inputNbInstance * instance.price * ((168 - west) / 168) +
         instance.price * (west / 168);
 
       const northCost =
-        nbInstance * instance.price * ((168 - north) / 168) +
+        inputNbInstance * instance.price * ((168 - north) / 168) +
         instance.price * (north / 168);
       const total = westCost + northCost;
       return {
         id: region.id,
         description: region.description
           .replace('XXX', `<b>${instance.title}</b>`)
-          .replace('XX', nbInstance),
+          .replace('XX', inputNbInstance),
         regionsValues: [
           westCost,
           northCost,
           total,
-          2 * nbInstance * instance.price - total,
+          2 * inputNbInstance * instance.price - total,
         ],
       };
     });
@@ -183,7 +183,6 @@ const Home = () => {
                           setI4(current);
                           setI5(0);
                           setI6(0);
-                          liveComputeProjection(current, i5, i6);
                         }}
                       />
                     </span>
@@ -221,7 +220,6 @@ const Home = () => {
                         setI5(current);
                         setI4(0);
                         setI6(0);
-                        liveComputeProjection(i4, current, i6);
                       }}
                     />
                   </Table.Td>
@@ -258,7 +256,6 @@ const Home = () => {
                         setI6(current);
                         setI5(0);
                         setI4(0);
-                        liveComputeProjection(i4, i5, current);
                       }}
                     />
                   </Table.Td>
