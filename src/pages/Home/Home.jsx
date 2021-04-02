@@ -8,20 +8,11 @@ import PriceRecap from 'pages/Home/PriceRecap';
 
 const Home = () => {
   const { instances } = JSON.parse(JSON.stringify(config));
-  const [i1Instance, i2Instance, i3Instance] = instances;
-  const [i1, setI1] = useState(0);
-  const [i2, setI2] = useState(0);
-  const [i3, setI3] = useState(0);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [projectionPrice, setProjectionPrice] = useState(0);
-
-  const [i4, setI4] = useState(0);
-  const [i5, setI5] = useState(0);
-  const [i6, setI6] = useState(0);
-
-  // base pour la refacto
   const [nbInstance, setNbInstance] = useState(0);
-  const [instanceType, setInstanceType] = useState();
+  const [nbInstanceProjection, setNbInstanceProjection] = useState(0);
+  const [instanceType, setInstanceType] = useState({});
 
   const defaultRegionsValues = [
     {
@@ -51,24 +42,22 @@ const Home = () => {
   ];
   const [autoScaleRegion, setAutoScaleRegion] = useState(defaultRegionsValues);
 
-  const liveCompute = (v1, v2, v3) => {
-    setCurrentPrice(
-      v1 * i1Instance.price + v2 * i2Instance.price + v3 * i3Instance.price
-    );
+  const computePrice = quantity => {
+    const priceInfos = instances.find(i => i.id === instanceType.id);
+    return priceInfos ? priceInfos.price * quantity : 0;
   };
 
   useEffect(() => {
-    liveCompute(i1, i2, i3);
-    if (i1 + i2 + i3 === 0) {
+    setCurrentPrice(computePrice(nbInstance));
+    computeAutoScaleRegions(instanceType, nbInstance);
+    if (nbInstance === 0) {
       setAutoScaleRegion(defaultRegionsValues);
     }
-  }, [i1, i2, i3]);
+  }, [nbInstance]);
 
   useEffect(() => {
-    setProjectionPrice(
-      i4 * i1Instance.price + i5 * i2Instance.price + i6 * i3Instance.price
-    );
-  }, [i4, i5, i6]);
+    setProjectionPrice(computePrice(nbInstanceProjection));
+  }, [nbInstanceProjection]);
 
   const dataModel = [
     {
@@ -96,6 +85,54 @@ const Home = () => {
       regionsValues: [108, 168],
     },
   ];
+  const formInputValuesDefaultValue = instances.map(instance => ({
+    instance,
+    inputs: [
+      {
+        id: `${instance.id}-instance`,
+        name: `${instance.id}_instance`,
+        value: 0,
+      },
+      {
+        id: `${instance.id}-projection`,
+        name: `${instance.id}_projection`,
+        value: 0,
+      },
+    ],
+  }));
+  const isInstanceInput = inputId => inputId.endsWith('instance');
+  const [formInputs, setFormInputs] = useState(formInputValuesDefaultValue);
+
+  const updateInput = (formPrevStateField, inputId, newValue, inputType) => {
+    if (formPrevStateField.id === inputId) {
+      return newValue;
+    }
+    if (formPrevStateField.id.endsWith(inputType)) {
+      return 0;
+    }
+    return formPrevStateField.value;
+  };
+
+  const instanceInputChangeHandler = (value, inputId, instance) => {
+    const [, inputType] = inputId.split('-');
+    const formatedInput = parseInt(value) || 0;
+    setFormInputs(inputInstances =>
+      inputInstances.map(inputInstance => ({
+        ...inputInstance,
+        inputs: inputInstance.inputs.map(input => ({
+          ...input,
+          value: updateInput(input, inputId, value, inputType),
+        })),
+      }))
+    );
+
+    if (isInstanceInput(inputId)) {
+      setNbInstance(formatedInput);
+    } else {
+      setNbInstanceProjection(formatedInput);
+    }
+    setInstanceType(instance);
+  };
 
   const computeAutoScaleRegions = (instance, inputNbInstance) => {
     const regionCost = dataModel.map(region => {
@@ -149,117 +186,31 @@ const Home = () => {
                 </Table.Tr>
               </Table.Header>
               <Table.Body>
-                <Table.Tr>
-                  <Table.Td>
-                    <div className="af-table-body-content">{`${i1Instance.title} - ${i1Instance.price} €/mois`}</div>
-                    <div className="af-table-body-content">{`${i1Instance.description}`}</div>
-                  </Table.Td>
-                  <Table.Td>
-                    <Text
-                      id="adultnumber"
-                      name="I1"
-                      value={i1}
-                      onChange={({ value }) => {
-                        const current = parseInt(value) || 0;
-                        setI1(current);
-                        setI2(0);
-                        setI3(0);
-                        liveCompute(current, i2, i3);
-                        computeAutoScaleRegions(i1Instance, current);
-                        setNbInstance(current);
-                        setInstanceType(i1Instance);
-                      }}
-                    />
-                  </Table.Td>
-                  <Table.Td>
-                    <span className="af-table-body-content">
-                      {' '}
-                      <Text
-                        id="adultnumber"
-                        name="I1"
-                        value={i4}
-                        onChange={({ value }) => {
-                          const current = parseInt(value) || 0;
-                          setI4(current);
-                          setI5(0);
-                          setI6(0);
-                        }}
-                      />
-                    </span>
-                  </Table.Td>
-                </Table.Tr>
-                <Table.Tr>
-                  <Table.Td>
-                    <div className="af-table-body-content">{`${i2Instance.title} - ${i2Instance.price} €/mois`}</div>
-                    <div className="af-table-body-content">{`${i2Instance.description}`}</div>
-                  </Table.Td>
-                  <Table.Td>
-                    <Text
-                      id="adultnumber"
-                      name="I1"
-                      value={i2}
-                      onChange={({ value }) => {
-                        const current = parseInt(value) || 0;
-                        setI2(current);
-                        setI1(0);
-                        setI3(0);
-                        liveCompute(i1, current, i3);
-                        computeAutoScaleRegions(i2Instance, current);
-                        setNbInstance(current);
-                        setInstanceType(i2Instance);
-                      }}
-                    />
-                  </Table.Td>
-                  <Table.Td>
-                    <Text
-                      id="adultnumber"
-                      name="I1"
-                      value={i5}
-                      onChange={({ value }) => {
-                        const current = parseInt(value) || 0;
-                        setI5(current);
-                        setI4(0);
-                        setI6(0);
-                      }}
-                    />
-                  </Table.Td>
-                </Table.Tr>
-                <Table.Tr>
-                  <Table.Td>
-                    <div className="af-table-body-content">{`${i3Instance.title} - ${i3Instance.price} €/mois`}</div>
-                    <div className="af-table-body-content">{`${i3Instance.description}`}</div>
-                  </Table.Td>
-                  <Table.Td>
-                    <Text
-                      id="adultnumber"
-                      name="I1"
-                      value={i3}
-                      onChange={({ value }) => {
-                        const current = parseInt(value) || 0;
-                        setI3(current);
-                        setI2(0);
-                        setI1(0);
-                        liveCompute(i1, i2, current);
-                        computeAutoScaleRegions(i3Instance, current);
-                        setNbInstance(current);
-                        setInstanceType(i3Instance);
-                      }}
-                    />
-                  </Table.Td>
-                  <Table.Td>
-                    <Text
-                      id="adultnumber"
-                      name="I1"
-                      value={i6}
-                      onChange={({ value }) => {
-                        const current = parseInt(value) || 0;
-                        setI6(current);
-                        setI5(0);
-                        setI4(0);
-                      }}
-                    />
-                  </Table.Td>
-                </Table.Tr>
+                {formInputs.map(({ instance, inputs }) => (
+                  <Table.Tr>
+                    <Table.Td>
+                      <div className="af-table-body-content">{`${instance.title} - ${instance.price} €/mois`}</div>
+                      <div className="af-table-body-content">{`${instance.description}`}</div>
+                    </Table.Td>
+
+                    {inputs.map(input => (
+                      <Table.Td>
+                        <Text
+                          id={input.id}
+                          name={input.id}
+                          value={input.value}
+                          onChange={({ value }) =>
+                            instanceInputChangeHandler(
+                              value,
+                              input.id,
+                              instance
+                            )
+                          }
+                        />
+                      </Table.Td>
+                    ))}
+                  </Table.Tr>
+                ))}
               </Table.Body>
             </Table>
           </div>
